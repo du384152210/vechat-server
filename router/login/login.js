@@ -1,5 +1,6 @@
 const { findOne } = require('../../dao/UserServer');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
   const { email, password } = req.fields;
@@ -10,7 +11,9 @@ module.exports = async (req, res) => {
     res.json({
       message: '登录成功',
       status: 200,
-      token: ''
+      token: jwt.sign({email: row.email}, 'abc', {
+        expiresIn: "3000s"
+    }),
     })
   } else {
     res.status(400).json({

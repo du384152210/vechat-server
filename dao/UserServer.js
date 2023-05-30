@@ -33,6 +33,10 @@ async function createUser(body) {
     password: password,
     avatar: null,
     createTime: new Date,
+    gender: 0,
+    birthday: null,
+    phone: null,
+    token: null,
   });
   return user
 }
