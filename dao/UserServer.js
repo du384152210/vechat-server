@@ -4,6 +4,16 @@ const Joi = require('joi');
 //hash密码
 const bcryptjs = require('bcryptjs');
 
+const option = { // option选项及其默认值
+  safe: true, // 安全模式
+  upsert: false, //如果不存在则创建新纪录
+  multi: false,  // 是否更新多个查询记录
+  runValidators: null, // 如果值为true，执行Validation验证。
+  setDefaultsOnInsert: null, // 如果upsert选项为true，在新建时插入文档定义的默认值。
+  strict: null, // 用严格模式跟新
+  overwrite: false // 禁用update-only模式，允许覆盖记录。
+}
+
 //注册数据格式验证
 const validateUser = user => {
   //定义对象验证规则
@@ -45,9 +55,19 @@ async function findOne(body) {
   let user = await User.findOne(body);
   return user
 }
+// 修改更新
+async function findOneAndUpdate(query, update) {
+  try {
+    const doc = await User.findOneAndUpdate(query, update);
+    return doc
+  } catch (error) {
+    return error
+  }
+}
 
 module.exports = {
   validateUser,
   createUser,
-  findOne
+  findOne,
+  findOneAndUpdate
 }
