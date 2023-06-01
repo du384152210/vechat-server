@@ -1,15 +1,11 @@
 const { findOne, createUser } = require('../../dao/UserServer');
+const { User } = require('../../model/User');
 
-module.exports = async(req, res) => {
-  console.log(req.query);
-  const row = await findOne(req.query)
+module.exports = async (req, res) => {
+  let token = req.headers.authorization;
+  const row = await User.findOne({ token }).select('-password').select('-token')
   res.status(200).json({
     msg: 'success',
-    data: {
-      nickName: row.nickName,
-      email: row.email,
-      avatar: row.avatar,
-      createTime: row.createTime
-    }
+    data: row
   });
 }

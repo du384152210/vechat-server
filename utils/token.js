@@ -7,12 +7,20 @@ const createToken = (data) => {
 }
 
 const varifyToken = (token) => {
-  jwt.verify(token, secret, (error, decoded) => {
-    if (error) {
-      return error
+  try {
+    token = token.replace('Bearer ','');
+    let decoded = jwt.verify(token, secret);
+    return {
+      code: 200,
+      message: '校验成功',
+      decoded
     }
-    return decoded
-  })
+  } catch (error) {
+    return {
+      code: 500,
+      message: '校验失败'
+    }
+  }
 }
 
 module.exports = {

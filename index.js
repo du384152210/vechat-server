@@ -4,6 +4,8 @@ const http = require('http');
 const { Server } = require("socket.io");
 const cors = require('cors');
 const path = require('path');
+const { varifyToken } = require('./utils/token');
+
 // 处理文件上传
 const formidableMiddleware = require('express-formidable');
 
@@ -30,9 +32,25 @@ app.use(formidableMiddleware({
   keepExtensions: true
 }));
 
-
 //开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next) => {
+  if (req.url != '/login' && req.url != '/register') {
+    let token = req.headers.authorization;
+    let result = varifyToken(token);
+    if (result.code === 200) {
+      next()
+    } else {
+      return res.status(401).send({
+        message: '登录信息过期',
+        status: 401
+      })
+    }
+  } else {
+    next();
+  }
+})
 
 //数据库连接
 require('./config/db');
