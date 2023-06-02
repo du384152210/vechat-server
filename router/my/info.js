@@ -1,4 +1,4 @@
-const { findOne, createUser } = require('../../dao/UserServer');
+
 const { User } = require('../../model/User');
 
 module.exports = async (req, res) => {
