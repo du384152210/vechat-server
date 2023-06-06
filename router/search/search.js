@@ -1,5 +1,6 @@
 const { fuzzyQuery } = require('../../dao/FriendServer');
 
 module.exports = async (req, res) => { 
-  fuzzyQuery(req.fields)
+  const{ key } = req.query;
+  fuzzyQuery(key)
 }

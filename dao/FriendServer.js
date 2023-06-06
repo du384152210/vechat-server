@@ -3,6 +3,7 @@ const { User } = require('../model/User');
 
 // 模糊查询
 const fuzzyQuery = async(key) => {
+  console.log(key);
   let whereStr = { $or: [{ 'nickName': { $regex: key } }, { 'email': { $regex: key } }] };
   let out = {
     nackName: '',
@@ -10,15 +11,11 @@ const fuzzyQuery = async(key) => {
     avatar: ''
   }
   try {
-    const result = await User.find(whereStr, out);
+    const result = await User.find(whereStr);
     console.log(result);
-    let token = req.headers.authorization;
-    const userRes = await User.findOne({token})
+    // const userRes = await User.findOne({token})
   } catch (error) {
-    res.status(500).send({
-      message: error,
-      status: 500
-    })
+    console.log(error);
   }
 }
 
