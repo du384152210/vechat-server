@@ -13,6 +13,9 @@ const friendSchema = mongoose.Schema({
   state: {
     type: Number
   },
+  markName: {
+    type: String
+  },
   //创建时间
   createTime: {
     type: Date,
