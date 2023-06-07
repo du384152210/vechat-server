@@ -7,4 +7,5 @@ module.exports = (app) => {
   app.post('/register', require('./login/register'))
  
   app.get('/search', require('./search/search'))
+  app.get('/friend/detail', require('./friend/detail'))
 }

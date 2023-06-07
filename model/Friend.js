@@ -11,7 +11,7 @@ const friendSchema = mongoose.Schema({
     ref: 'User'
   },
   state: {
-    type: Number
+    type: Number // 0已为好友，1申请中，2未同意
   },
   markName: {
     type: String
