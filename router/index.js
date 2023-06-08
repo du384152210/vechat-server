@@ -8,4 +8,5 @@ module.exports = (app) => {
  
   app.get('/search', require('./search/search'))
   app.get('/friend/detail', require('./friend/detail'))
+  app.post('/friend/apply', require('./friend/apply'))
 }

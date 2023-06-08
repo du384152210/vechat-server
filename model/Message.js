@@ -15,7 +15,7 @@ const MessageSchema = mongoose.Schema({
   },
   types: {
     type: Number
-  },
+  },// 状态 （0，已读，1未读）
   state: {
     type: Number
   },

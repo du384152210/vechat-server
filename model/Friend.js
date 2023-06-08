@@ -20,7 +20,10 @@ const friendSchema = mongoose.Schema({
   createTime: {
     type: Date,
     default: Date.now
-  }
+  },
+  lastTime: {
+    type: Date,
+  }// 最后通讯时间
 }, { versionKey: false });
 
 const Friend = mongoose.model('Friend', friendSchema);

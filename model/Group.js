@@ -5,7 +5,7 @@ const groupSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  },
+  },// 群主id
   name: {
     type: String
   },
