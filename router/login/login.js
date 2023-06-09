@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const { createToken } = require('../../utils/token');
 
 module.exports = async (req, res) => {
-  const { email, password } = req.fields;
+  const { email, password } = req.body;
   const row = await findOne({ email: email });
   if (!row) return res.status(400).json({ message: '该用户不存在！', status: 400 });
   let compareResult = bcryptjs.compareSync(password, row.password);

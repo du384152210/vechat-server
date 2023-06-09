@@ -3,7 +3,7 @@ const { applyFriend } = require('../../dao/FriendServer');
 const { findOne } = require('../../dao/UserServer')
 
 module.exports = async (req, res) => {
-  const { fid, msg } = req.fields;
+  const { fid, msg } = req.body;
   const token = req.headers.authorization;
   try {
     const user = await findOne({ token });

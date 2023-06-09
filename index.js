@@ -7,7 +7,7 @@ const path = require('path');
 const { varifyToken } = require('./utils/token');
 
 // 处理文件上传
-const formidableMiddleware = require('express-formidable');
+// const formidableMiddleware = require('express-formidable');
 
 const port = 3000
 let server = app.listen(8082);
@@ -22,18 +22,22 @@ io.on('connection', (socket) => {
 });
 // 跨域处理
 app.use(cors());
-// 处理post参数
-app.use(formidableMiddleware({
-  //文件上传目录
-  uploadDir: path.join(__dirname, 'public', 'uploads'),
-  //z最大上传文件为2M
-  maxFileSize: 2 * 1024 * 1024,
-  //保留文件扩展名
-  keepExtensions: true
-}));
 
+// 处理post参数
+// app.use(formidableMiddleware({
+//   //文件上传目录
+//   uploadDir: path.join(__dirname, 'public', 'uploads'),
+//   //z最大上传文件为2M
+//   maxFileSize: 2 * 1024 * 1024,
+//   //保留文件扩展名
+//   keepExtensions: true
+// }));
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 //开放静态资源
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use((req, res, next) => {
   if (req.url != '/login' && req.url != '/register') {

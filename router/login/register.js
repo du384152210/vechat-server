@@ -1,9 +1,9 @@
 const { findOne, validateUser, createUser } = require('../../dao/UserServer');
 
 module.exports = async(req, res) => {
-  const { email } = req.fields;
+  const { email } = req.body;
   try {
-    await validateUser(req.fields);
+    await validateUser(req.body);
   } catch (error) {
     return res.status(400).json({ message: error.message, status: 400 });
   }
@@ -13,7 +13,7 @@ module.exports = async(req, res) => {
   
   else {
     try {
-      const user = await createUser(req.fields);
+      const user = await createUser(req.body);
       res.status(200).json({
         message: '注册成功',
         status: 200

@@ -1,3 +1,5 @@
+
+
 module.exports = (app) => {
   // 我的
   app.get('/my', require('./my/info'))
@@ -9,4 +11,6 @@ module.exports = (app) => {
   app.get('/search', require('./search/search'))
   app.get('/friend/detail', require('./friend/detail'))
   app.post('/friend/apply', require('./friend/apply'))
+  
+  require('./upload/index')(app)
 }

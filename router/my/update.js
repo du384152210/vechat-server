@@ -4,7 +4,7 @@ const { User } = require('../../model/User');
 module.exports = async (req, res) => {
   let token = req.headers.authorization;
   try {
-    await findOneAndUpdate({ token }, { ...req.fields });
+    await findOneAndUpdate({ token }, { ...req.body });
     res.send({
       message: '修改成功',
       status: 200

@@ -106,7 +106,7 @@ const applyFriend = async (uid, fid, msg) => {
 }
 
 // 更新好友状态
-const updateFriendState = (uid, fid) => {
+const updateFriendState = async(uid, fid) => {
   let whereStr = { $or: [{ 'userId': uid, 'friendId': fid }, { 'userId': fid, 'friendId': uid }] };
   try {
     await Friend.updateMany(whereStr, {'state': 0})
@@ -116,7 +116,7 @@ const updateFriendState = (uid, fid) => {
 }
 
 // 拒绝好友或删除好友
-const deleteFriend = () => {
+const deleteFriend = async (uid, fid) => {
   let whereStr = { $or: [{ 'userId': uid, 'friendId': fid }, { 'userId': fid, 'friendId': uid }] };
   try {
     await Friend.deleteMany(whereStr);
