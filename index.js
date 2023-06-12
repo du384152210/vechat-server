@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {
-  if (req.url != '/login' && req.url != '/register') {
+  if (req.url != '/login' && req.url != '/register' && req.url != '/upload') {
     let token = req.headers.authorization;
     let result = varifyToken(token);
     if (result.code === 200) {
