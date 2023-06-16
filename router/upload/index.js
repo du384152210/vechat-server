@@ -1,7 +1,7 @@
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'G:\\personal\\node\\vechat-server\\public')
+    cb(null, 'G:\\personal\\node\\vechat-server\\public\\images')
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -15,7 +15,7 @@ module.exports = (app) => {
   app.post('/upload', upload.single('file'), function (req, res, next) {
     res.json({
       message: 'success',
-      src: req.file.filename
+      src: 'http://localhost:3000/images/' + req.file.filename
     })
   })
 }
