@@ -20,7 +20,8 @@ module.exports = async (req, res) => {
     res.json({
       message: '登录成功',
       status: 200,
-      token
+      token,
+      id: row._id
     })
   } else {
     res.status(400).json({

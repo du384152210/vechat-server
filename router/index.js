@@ -11,6 +11,9 @@ module.exports = (app) => {
   app.get('/search', require('./search/search'))
   app.get('/friend/detail', require('./friend/detail'))
   app.post('/friend/apply', require('./friend/apply'))
-  
+  app.get('/friend/list', require('./friend/list'))
+
+  app.post('/oneMsg', require('./message/oneMsg'))
+
   require('./upload/index')(app)
 }

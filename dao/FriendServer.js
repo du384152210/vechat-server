@@ -125,10 +125,75 @@ const deleteFriend = async (uid, fid) => {
   }
 }
 
+// 查找好友
+const getFirends = async (uid, state) => {
+  try {
+    const row = await Friend.find({ 'userId': uid, 'state': state })
+      .populate('friendId')
+      .sort({ 'lastTime': -1 }).exec()
+    const result = row.map(item => {
+      return {
+        id: item.friendId._id,
+        name: item.friendId.nickName,
+        avatar: item.friendId.avatar,
+        lastTime: item.lastTime
+      }
+    })
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+// 获取一对一消息
+const getOneMsg = async (uid, fid) => {
+  try {
+    const row = await Message.findOne({ $or: [{ 'userId': uid, 'friendId': fid }, { 'userId': fid, 'friendId': uid }]})
+      .sort({ 'time': -1 }).exec()
+    const result = {
+        message: row.message,
+        time: row.time,
+        types: row.types
+      }
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+// 获取未读信息
+const unreadMsg = async() => {
+  try {
+    let wherestr = { 'userId': uid, 'friendId': fid, state: 1 };
+    const count = await Message.countDocuments(wherestr);
+    return count;
+  } catch (error) {
+    return error;
+  }
+}
+
+// 更新信息状态
+const updateMsgState = async () => {
+  try {
+    let wherestr = { 'userId': uid, 'friendId': fid, 'state': 1 };
+    let updatestr = { 'state': 0 };
+    Message.updateMany(wherestr, updatestr);
+    return true
+  } catch (error) {
+    return error;
+  }
+}
+
+
 module.exports = {
   fuzzyQuery,
   findById,
   applyFriend,
   updateFriendState,
-  deleteFriend
+  deleteFriend,
+  getFirends,
+  getOneMsg,
+  unreadMsg,
+  updateMsgState
 }

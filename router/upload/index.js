@@ -1,9 +1,18 @@
 const multer = require('multer');
+const mkdir = require('../../dao/mkdir');
+
+// 控制文件存储
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'G:\\personal\\node\\vechat-server\\public\\images')
+    let url = req.body.url;
+    mkdir.mkdirs('../data/+url', err => {
+      console.log(err);
+    });
+
+    cb(null, './data/'+url)
   },
   filename: function (req, file, cb) {
+    // let name = req.body.name;
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1])
   }
