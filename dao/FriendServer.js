@@ -163,7 +163,7 @@ const getOneMsg = async (uid, fid) => {
 }
 
 // 获取未读信息
-const unreadMsg = async() => {
+const unreadMsg = async (uid, fid) => {
   try {
     let wherestr = { 'userId': uid, 'friendId': fid, state: 1 };
     const count = await Message.countDocuments(wherestr);
@@ -174,7 +174,7 @@ const unreadMsg = async() => {
 }
 
 // 更新信息状态
-const updateMsgState = async () => {
+const updateMsgState = async (uid, fid) => {
   try {
     let wherestr = { 'userId': uid, 'friendId': fid, 'state': 1 };
     let updatestr = { 'state': 0 };
@@ -182,6 +182,35 @@ const updateMsgState = async () => {
     return true
   } catch (error) {
     return error;
+  }
+}
+
+// 查找信息列表
+const msgList = async (data) => {
+  try {
+    const friend = await getFirends(data.uid, 0);
+    for (let i = 0; i < friend.length; i++) {
+      const msg = await getOneMsg(data.uid, friend[i].id);
+      switch (msg.types) {
+        case 1:
+          msg.message = '[图片]'
+          break;
+        case 2:
+          msg.message = '[音频]'
+          break;
+        case 3:
+          msg.message = '[位置]'
+          break;
+        default:
+          break;
+      }
+      friend[i].msg = msg.message;
+      const unreadNum = await unreadMsg(data.uid, friend[i].id);
+      friend[i].tip = unreadNum;
+    }
+    return friend;
+  } catch (error) {
+    throw error
   }
 }
 
@@ -195,5 +224,6 @@ module.exports = {
   getFirends,
   getOneMsg,
   unreadMsg,
-  updateMsgState
+  updateMsgState,
+  msgList
 }

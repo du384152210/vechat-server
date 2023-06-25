@@ -14,6 +14,7 @@ module.exports = (app) => {
   app.get('/friend/list', require('./friend/list'))
 
   app.post('/oneMsg', require('./message/oneMsg'))
+  app.get('/msg/list', require('./message/list'))
 
   require('./upload/index')(app)
 }
